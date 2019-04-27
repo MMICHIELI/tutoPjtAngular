@@ -5,4 +5,6 @@
     [appareilStatus]="appareil.status" [index]="i" [id]="appareil.id"></app-appareil>
 </ul>
 <button class="btn btn-success mr-2" [disabled]="!isAuth" (click)="onAllumer()">Tout Allumer</button>
-<button class="btn btn-danger" [disabled]="!isAuth" (click)="onEteindre()">Tout éteindre</button>
+<button class="btn btn-danger mr-2" [disabled]="!isAuth" (click)="onEteindre()">Tout éteindre</button>
+<button class="btn btn-primary mr-2" (click)="onSave()">Enregistrer les appareils</button>
+<button class="btn btn-primary" (click)="onFetch()">Récupérer les appareils</button>
