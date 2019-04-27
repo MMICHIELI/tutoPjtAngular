@@ -1,41 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import 'rxjs/add/observable/interval';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
 
-  title = 'My Awesome App';
-  isAuth = false;
-  lastUpdate = new Date();
+    title = 'My Awesome App';
+    secondes: number;
+    counterSubscription: Subscription;
 
-  // Illustrates ngFor directive
-  appareils = [
-    {
-      name: 'Machine à laver',
-      status: 'éteint'
-    },
-    {
-      name: 'Frigo',
-      status: 'allumé'
-    },
-    {
-      name: 'Ordinateur',
-      status: 'éteint'
+    constructor() { }
+
+    ngOnInit() {
+        // Observables
+        const counter = Observable.interval(1000);
+        this.counterSubscription = counter.subscribe(
+            (value) => {
+                this.secondes = value;
+            },
+            (error) => {
+                console.log('Uh-oh, an error occurred! : ' + error);
+            },
+            () => {
+                console.log('Observable complete!');
+            }
+        );
     }
-  ];
 
-  constructor() {
-    setTimeout(
-      () => {
-        this.isAuth = true;
-      }, 4000
-    );
-  }
-
-  onAllumer() {
-    console.log('On allume tout !');
-  }
+    ngOnDestroy() {
+        this.counterSubscription.unsubscribe();
+    }
 }
